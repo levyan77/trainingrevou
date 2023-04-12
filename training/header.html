@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="css-layout/header.css">
+        <style>
+            * {
+            box-sizing: border-box;
+            }
+            input[type=text], input[type=date], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+            }
+            input[type=submit] {
+                width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            }
+            label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+            }
+            .icon_delete{
+                width: 30px;
+                height: 30px;
+            }
+            .content{
+                flex-direction: row;
+                display: flex;
+            }
+            .content > div{
+                display: flex;
+                flex: 1;
+                align-content: center;
+                justify-content: center;
+            }
+            .containertable {
+            border-radius: 5px;
+            background-color: white;
+            padding: 20px;
+            }
+
+            .col-25 {
+            float: left;
+            width: 25%;
+            margin-top: 5px;
+            }
+
+            .col-75 {
+            float: left;
+            width: 75%;
+            margin-top: 6px;
+            }
+            footer > p{
+                text-align: end;
+            }
+            .table_person{
+                /* border: 5px solid black; */
+                border-collapse: collapse;
+            }
+            th{
+                background-color: lightgrey;
+                border: 1px solid #dddddd;
+                text-align: center;
+                padding: 15px;
+            }
+            td{
+                border: 1px solid #dddddd;
+                text-align: center;
+                padding: 15px;
+            }
+            footer{
+                position: fixed;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                background-color: white;
+                color: black;
+                text-align: center;
+                border: 5px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="container">
+            <img src="data:image/png;base64,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"
+             alt="" class="logo" width="40" height="40">
+
+            <div class="home">Home</div>
+            <div class="search">Search</div>
+            <div class="logout">Logout</div>
+        </nav>
+
+        <header>
+            <h1>Form Belajar</h1>
+            <p>Ini adalah website latihan pertama</p>
+        </header>
+
+        <main class="content">
+            <div class="containertable">
+                <form action="">
+                <div class="row">
+                    <div class="col-25">
+                        <label for="name">Nama :</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" id="name" name="name">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="birthday">Tanggal Lahir :</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="date" id="birthday" name="birthday">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="lakilaki">Jenis Kelamin :</label>
+
+                    </div>
+                    <div class="col-75">
+                        <input type="radio" id="lakilaki" name="jenis_kelamin" value="Laki-Laki">
+                        <label for="lakilaki">Laki-Laki</label>
+                        <input type="radio" id="perempuan" name="jenis_kelamin" value="Perempuan">
+                        <label for="perempuan">Perempuan</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="pesan">Pesan :</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea name="pesan" id="pesan" cols="64" rows="8">Pesan</textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <input type="submit">
+                </div>
+                </form>
+            </div>
+
+            <div>
+                <!-- <h2>ini table</h2> -->
+                <table class="table_person">
+                    <tr>
+                        <th>Nama</th>
+                        <th>Tanggal Lahir</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Pesan</th>
+                        <th>Profile</th>
+                        <th>Hapus</th>
+                    </tr>
+                    <tr>
+                        <td>Test1</td>
+                        <td>12 Januari 2023</td>
+                        <td>Laki - Laki</td>
+                        <td>Belajar buat website</td>
+                        <td><a href="#">Klik Disini</a></td>
+                        <td><img class="icon_delete" src="https://imgs.search.brave.com/q1-WPzr5XXzhHRMOjascJgzq_KxKIamphVVf5z_yoQo/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5B/WGZhSWxnb1cwY1RR/VVpIR3ZMV29nSGFI/YSZwaWQ9QXBp" alt=""></td>
+                    </tr>
+                    <tr>
+                        <td>Test1</td>
+                        <td>12 Januari 2023</td>
+                        <td>Laki - Laki</td>
+                        <td>Belajar buat website</td>
+                        <td><a href="#">Klik Disini</a></td>
+                        <td><img class="icon_delete" src="https://imgs.search.brave.com/q1-WPzr5XXzhHRMOjascJgzq_KxKIamphVVf5z_yoQo/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5B/WGZhSWxnb1cwY1RR/VVpIR3ZMV29nSGFI/YSZwaWQ9QXBp" alt=""></td>
+                    </tr>
+                    <tr>
+                        <td>Test1</td>
+                        <td>12 Januari 2023</td>
+                        <td>Laki - Laki</td>
+                        <td>Belajar buat website</td>
+                        <td><a href="#">Klik Disini</a></td>
+                        <td><img class="icon_delete" src="https://imgs.search.brave.com/q1-WPzr5XXzhHRMOjascJgzq_KxKIamphVVf5z_yoQo/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5B/WGZhSWxnb1cwY1RR/VVpIR3ZMV29nSGFI/YSZwaWQ9QXBp" alt=""></td>
+                    </tr>
+                    <tr>
+                        <td>Test1</td>
+                        <td>12 Januari 2023</td>
+                        <td>Laki - Laki</td>
+                        <td>Belajar buat website</td>
+                        <td><a href="#">Klik Disini</a></td>
+                        <td><img class="icon_delete" src="https://imgs.search.brave.com/q1-WPzr5XXzhHRMOjascJgzq_KxKIamphVVf5z_yoQo/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5B/WGZhSWxnb1cwY1RR/VVpIR3ZMV29nSGFI/YSZwaWQ9QXBp" alt=""></td>
+                    </tr>
+                </table>
+            </div>
+        </main>
+        <footer>
+            <p>Revou 2023</p>
+        </footer>
+    </body>
+</html>
