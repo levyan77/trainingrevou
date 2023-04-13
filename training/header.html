@@ -97,26 +97,26 @@
 
         <header>
             <h1>Form Belajar</h1>
-            <p>Ini adalah website latihan pertama</p>
+            <p>Ini adalah website latihan pertama <span id="nama"></span></p>
         </header>
 
         <main class="content">
             <div class="containertable">
-                <form action="">
+                <form name="message-form" onsubmit="return validateForm()">
                 <div class="row">
                     <div class="col-25">
-                        <label for="name">Nama :</label>
+                        <label for="full-name">Nama :</label>
                     </div>
                     <div class="col-75">
-                        <input type="text" id="name" name="name">
+                        <input placeholder="Nama" type="text" id="full-name" name="full-name">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-25">
-                        <label for="birthday">Tanggal Lahir :</label>
+                        <label for="birth-date">Tanggal Lahir :</label>
                     </div>
                     <div class="col-75">
-                        <input type="date" id="birthday" name="birthday">
+                        <input type="date" id="birth-date" name="birth-date">
                     </div>
                 </div>
                 <div class="row">
@@ -125,9 +125,9 @@
 
                     </div>
                     <div class="col-75">
-                        <input type="radio" id="lakilaki" name="jenis_kelamin" value="Laki-Laki">
+                        <input type="radio" id="lakilaki" name="gender" value="Laki-Laki">
                         <label for="lakilaki">Laki-Laki</label>
-                        <input type="radio" id="perempuan" name="jenis_kelamin" value="Perempuan">
+                        <input type="radio" id="perempuan" name="gender" value="Perempuan">
                         <label for="perempuan">Perempuan</label>
                     </div>
                 </div>
@@ -136,11 +136,11 @@
                         <label for="pesan">Pesan :</label>
                     </div>
                     <div class="col-75">
-                        <textarea name="pesan" id="pesan" cols="64" rows="8">Pesan</textarea>
+                        <textarea name="messages" id="pesan" cols="64" rows="8">Pesan</textarea>
                     </div>
                 </div>
                 <div class="row">
-                    <input type="submit">
+                    <input type="submit" value="Submit">
                 </div>
                 </form>
             </div>
@@ -157,10 +157,10 @@
                         <th>Hapus</th>
                     </tr>
                     <tr>
-                        <td>Test1</td>
-                        <td>12 Januari 2023</td>
-                        <td>Laki - Laki</td>
-                        <td>Belajar buat website</td>
+                        <td><span id="sender-full-name"></span></td>
+                        <td><span id="sender-birth-date"></span></td>
+                        <td><span id="sender-gender"></span></td>
+                        <td><span id="sender-messages"></span></td>
                         <td><a href="#">Klik Disini</a></td>
                         <td><img class="icon_delete" src="https://imgs.search.brave.com/q1-WPzr5XXzhHRMOjascJgzq_KxKIamphVVf5z_yoQo/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5B/WGZhSWxnb1cwY1RR/VVpIR3ZMV29nSGFI/YSZwaWQ9QXBp" alt=""></td>
                     </tr>
@@ -191,6 +191,37 @@
                 </table>
             </div>
         </main>
+
+        <script>
+            // var name = prompt("Masukan nama kamu");
+            // // console.log(nama);
+            // document.getElementById("nama").innerText = name;
+            // // console.log(element);
+
+            function validateForm() {
+                const name = document.forms["message-form"]["full-name"].value;
+                // console.log({name});
+                const birthDate = document.forms["message-form"]["birth-date"].value;
+                const gender = document.forms["message-form"]["gender"].value;
+                const messages = document.forms["message-form"]["messages"].value;
+
+                if (name == "" || birthDate == "" || gender == "" || messages == ""){
+                    alert("Tidak boleh ada yang kosong");
+                    return false;
+                }
+
+                setSenderUI(name, birthDate, gender, messages);
+                return false;
+            }
+
+            function setSenderUI(name, birthDate, gender, messages) {
+             document.getElementById("sender-full-name").innerHTML = name;
+             document.getElementById("sender-birth-date").innerHTML = birthDate;
+             document.getElementById("sender-gender").innerHTML = gender;
+             document.getElementById("sender-messages").innerHTML = messages;
+            }
+        </script>
+
         <footer>
             <p>Revou 2023</p>
         </footer>
